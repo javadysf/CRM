@@ -1,30 +1,36 @@
 import Customer from "@/models/customer";
 import ConnectDB from "@/utils/Connectdb";
 
-export async function handler(req, res) {
-    try {
-     ConnectDB();
-        
-    } catch (error) {
-        res.status(500).json({ status: "failed", message: "nashod nashod" });
-        return;
-    }
-    if (req.method === "PATCH") {
-        const id = req.query.customerId;
-        co
-        try {
-           const data =  await Customer.findById({_id: id})  
-           data.name = 
-            res.status(200)
-            .json({
-              status: "success",
-              message: "data was deleted successfully",
-            });
-        } catch (error) {
-          console.log(error);
-          return res
-            .status(500)
-            .json({ status: "failed", message: "error deleting data in db" });
-        }
-}    
+
+export default async function editCustomer(req, res)
+{
+  try {
+    ConnectDB();
+  } catch (error) {
+       res.status(500).json({message:"Error connecting db",status:"failed"});
+       return;
   }
+  if(req.method === "PATCH")
+    {const id = req.query.customerId;
+      const data = req.body.data;
+      try {
+        const customer = await Customer.findOne({_id:id})
+        customer.name = data.name;
+        customer.lastName = data.lastName;
+        customer.email = data.email;
+        customer.phone = data.phone;
+        customer.address = data.address;
+        customer.postalCode = data.postalCode;
+        customer.products = data.products;
+        customer.date = data.date;
+        customer.updatedAt = Date.now();
+        customer.save();
+        res.status(200).json({message:"succesfully changed",status:"success",data:customer})
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({message:"editing failed",status : "failed"})
+        
+      }
+    }
+
+}

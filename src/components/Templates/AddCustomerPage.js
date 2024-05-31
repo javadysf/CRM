@@ -6,7 +6,7 @@ const AddCustomerPage = () => {
   const [form, setForm] = useState({
     name: "",
     lastName: "",
-    email: "",
+    email: "", 
     phone: "",
     address: "",
     date: "",
