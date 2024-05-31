@@ -24,7 +24,7 @@ const Card = ({customer}) => {
     </div>
     <div className="card__buttons">
       <button onClick={()=>deleteHandler(customer?._id)}>Delete</button>
-      <Link href={`/edit/${customer._id}`}>Edit</Link>
+      <Link href={`/edit-customer/${customer._id}`}>Edit</Link>
       <Link href={`/customer/${customer._id}`}>Details</Link>
     </div>
   </div>
